@@ -1,0 +1,20 @@
+.input-with-span {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-with-span .form-control {
+    flex: 1;
+  }
+  
+  .input-with-span span {
+    flex: 0 0 auto;
+    height: 38px; 
+    font-size: 24px;
+    border: 1px solid #aaa;
+    margin-left: 10px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+    line-height: 38px; 
+  }

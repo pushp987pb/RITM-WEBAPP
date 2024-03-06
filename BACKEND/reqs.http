@@ -1,0 +1,104 @@
+
+post http://localhost:7000/user-api/room-booking-donation
+Content-Type: application/json
+
+{
+    "username":"karan",
+    "rooms_n_donation": 
+        {
+            
+            "donation":{"amount":"111" , "payment_method":"UPI","atTemple":"abc"}
+        }
+    
+}
+
+###
+post http://localhost:7000/temple-api/login
+Content-Type: application/json
+
+{
+    "templename":"durjaji",
+    "password":"12345"
+}
+###
+
+get http://localhost:7000/temple-api/get-temple-erd/jaimatadi@gmail.com
+
+###
+post http://localhost:7000/temple-api/temple-ERD
+Content-Type: application/json
+
+{
+    "temple_email": "jaimatadi@gmail.com",
+    "temple_ERD": 
+        {
+            "availableRooms": {
+                "single_seater":"11111",
+                "double_seater":"12",
+                "triple_seater":"15"
+            }
+        }
+    
+}
+###
+put http://localhost:7000/temple-api/update-temple
+Content-Type: application/json
+
+{
+    "email":"jaimatadi@gmail.com",
+    "state":"UPES",
+    "district":"bsr",
+    "fullname":"naya naam"
+}
+###
+get http://localhost:7000/temple-api/get-temple/65df8999402f42efda104f89
+
+###
+get http://localhost:7000/temple-api/get-donation/Jai Mata Di Temple
+
+###  getting user donation
+get http://localhost:7000/user-api/get-donation/karan
+###
+get http://localhost:7000/user-api/get-room-booking/karan
+###
+get http://localhost:7000/temple-api/get-room-booking/Jai Mata Di Temple
+
+### making donation
+post http://localhost:7000/temple-api/make-donation
+Content-Type: application/json
+
+{
+    "templename":"Ram Mandir",
+    "username":"karan",
+    "donation":{
+        "amount":1900,
+        "method":"UPI"
+    }
+}
+
+### saving event
+post http://localhost:7000/temple-api/save-event
+Content-Type: application/json
+
+{
+    "templename":"balaji",
+    "events":{
+        "amount":1100,
+        "method":"UPI"
+    }
+}
+### get event list
+get http://localhost:7000/temple-api/get-events/Jai Mata Di Temple
+
+### saving rooms
+post http://localhost:7000/temple-api/save-rooms
+Content-Type: application/json
+
+{
+    "templename":"balaji",
+    "availableRooms":{
+        "single_seater":10,
+        "double_seater":10,
+        "triple_seater":10
+    }
+}
