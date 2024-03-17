@@ -1,3 +1,8 @@
+.menu-icon {
+  display: none;
+}
+
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -94,17 +99,86 @@
   }
 }
 @media screen and (max-width: 540px) {
+  .temple-name{
+    font-size: 24px;
+  }
   .app-name {
-    font-size: 14px;
+    font-size: 16px;
+    width: 60%;
+  }
+  .logo-img{
+    float: left;
   }
   .header {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
   .navbar-link {
-    padding:10px;
+    padding: 15px 16px;
   }
 
+  .navbar-container {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    z-index: 500;
+    /* other styles as needed */
+  }
+
+  .navbar-container.show {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    position: fixed;
+    top:0;
+    left: 0;
+  }
+  .navbar-item {
+    margin:0px;
+  }
+  .dropdown-content {
+  left: 35%;
+  }
+
+li {
+    display: block;
+    width: 100%;
+    /* border-bottom: 1px solid #ff5733; */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  .navbar-link {
+    border-radius: 0px;
+  }
+li:last-child(){
+    border-bottom: none;
+  }
+  .navbar-link:hover  {
+    background-color: #ddd;
+    color: black;
+  }
+  
+
+  .menu-icon {
+    display: block;
+    position: fixed;
+    right:20px;
+    cursor: pointer;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 10%;
+    z-index: 1000;
+    float: right;
+    color: #ff5733;
+    font-size: 42px;
+  }
+
+  menu-icon.close{
+    color: #aaa;
+  }
+  .logo-container{
+    justify-content:flex-start;
+  }
 }

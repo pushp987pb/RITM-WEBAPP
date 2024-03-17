@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import axios from "axios";
-import {useForm} from 'react-hook-form'
 import "./TempleDetails.css"; // Import the CSS file
 import { useParams, useNavigate } from "react-router-dom";
 import {useSelector} from 'react-redux'
 import ListofEvents from '../ListofEvents/ListofEvents'
 import RoomBookingFrom from "../RoomBookingForm/RoomBookingFrom";
+import DonationForm from "../DonationForm/DonationForm";
 import {ToastContainer , toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function TempleDetails() {
-  const { register, handleSubmit } = useForm();
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ function TempleDetails() {
   useEffect(() => {
     const fetchTempleDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:7000/temple-api/get-temple/${id}`);
+        const response = await axios.get(`http://localhost:7000/temple-api/get-temple-details/${id}`);
         setTempleDetails(response.data.payload);
       } catch (error) {
         console.error("Error fetching temple details", error);
@@ -35,7 +34,7 @@ function TempleDetails() {
     };
 
     fetchTempleDetails();
-  }, [id,templeDetails]);
+  }, [showBookingForm, donationFrom,currentUser]);
 
   const handleBookRoomsClick = () => {
     if (Object.keys(currentUser).length === 0) {
@@ -59,26 +58,8 @@ function TempleDetails() {
     }
   };
 
-  // donation function......
-  async function onDonation(donationObj) {
-    let updatedObj = { 
-        user:{username:currentUser.username,fullname:currentUser.fullname,mobileNumber:currentUser.mobileNumber},
-        temple:{templename:templeDetails.templename,fullname:templeDetails.fullname,mobileNumber:templeDetails.mobileNumber},
-        donation:donationObj
-    };if(currentUser.hasOwnProperty('mobileNumber')){
-        toast("Donation Failed");
-        toast("Update Your Profile");
-    }else{
-      let response = await axios.post('http://localhost:7000/temple-api/make-donation',updatedObj)
-      if(response.status===201){
-        toast("Donation Succesfull")
-      }else{
-        toast("Donation Failed")
-      }
-    setDonationFrom(false);}
-  }
-  
-  
+ 
+ 
 
   if (!templeDetails) {
     return <p className='lead display-1 text-danger'>Loading temple details...</p>;
@@ -88,7 +69,7 @@ function TempleDetails() {
   <div className="temple-details-container">
 
         <div className="temple-header">
-          <h1 className="temple-name">{templeDetails.templename}</h1>
+          <h1 className="temple-name">{templeDetails.hasOwnProperty('fullname') ? templeDetails.fullname: templeDetails.templename}</h1>
           {currentUser.username && <p className='current-user'> Username: {currentUser.username}</p>}
         </div>
         
@@ -115,12 +96,12 @@ function TempleDetails() {
 
           {/* Upcoming Events Card */}
           <div className="temple-details-card upcoming-events-card">
-            <h3>Upcoming Events</h3>
+            <h3 className="three-cards-heading">Upcoming  Events</h3>
             {templeDetails.upcomingEvent!==undefined ? (
               <>
-              <p>Event Name :{templeDetails.upcomingEvent.event_name}</p>
-              <p>Event Date :{templeDetails.upcomingEvent.event_date}</p>
-              <p>Event Duration :{templeDetails.upcomingEvent.event_duration}</p>
+              <p>Event Name : {templeDetails.upcomingEvent.event_name}</p>
+              <p>Event Date : {templeDetails.upcomingEvent.event_date}</p>
+              <p>Event Duration : {templeDetails.upcomingEvent.event_duration}</p>
               <button className="donate-button" onClick={() => setShowListofEvents(true)}>
                 List of Events
               </button>
@@ -132,10 +113,10 @@ function TempleDetails() {
 
           {/* Stay Facilities Card */}
           <div className="temple-details-card stay-facilities-card">
-            <h3>Stay Facilities</h3>
-            <p>Single Bed Rooms: {templeDetails.availableRooms ? templeDetails.availableRooms.single_seater : "Not Specified"}</p>
-            <p>Double Bed Rooms: {templeDetails.availableRooms ? templeDetails.availableRooms.double_seater : "Not Specified"}</p>
-            <p>Triple Bed Rooms: {templeDetails.availableRooms ? templeDetails.availableRooms.triple_seater : "Not Specified"}</p>
+            <h3>Stay  Facilities</h3>
+            <p>Single Bed Rooms : {templeDetails.availableRooms ? templeDetails.availableRooms.single_seater : "NA"}</p>
+            <p>Double Bed Rooms : {templeDetails.availableRooms ? templeDetails.availableRooms.double_seater : "NA"}</p>
+            <p>Triple Bed Rooms : {templeDetails.availableRooms ? templeDetails.availableRooms.triple_seater : "NA"}</p>
             { templeDetails.availableRooms!== undefined && 
             <button className="book-rooms-button" onClick={handleBookRoomsClick}>
               Book Rooms
@@ -143,7 +124,7 @@ function TempleDetails() {
           </div>
           {/* Donation Card...... */}
           <div className="temple-details-card make-donations-card">
-            <h3>Make Donations</h3>
+            <h3>Make  Donations</h3>
             <p>
               Support the temple's development and activities. Your contribution can make a
               difference.
@@ -156,27 +137,6 @@ function TempleDetails() {
         </div>
 
       </div>
-      {/* Donation  form */}
-      { donationFrom && (
-        <form id='room-update-form' onSubmit={handleSubmit(onDonation)}>
-          <div className="rooms-update-form">
-            <h3>Donation Details</h3>
-            <div className="form-group mb-2">
-              <label className='text-align-left' htmlFor="name">Amount</label>
-              <input {...register("amount")} type="number" className="form-control" min='0'  placeholder="Amount" required />
-            </div>
-            <div className="form-group mb-2">
-              <label className='text-align-left' htmlFor="name">Method of Payment</label>
-              <input {...register("payment_method")} type="text" className="form-control"   placeholder="e.g. NEFT/IMPS/UPI" required />
-            </div>
-            <div className="form-buttons">
-              <button className="form-buttons-btn" type="submit">Submit</button>
-              <button className="form-buttons-btn"  type="button" onClick={() => setDonationFrom(false)}>Cancel</button>
-            </div>
-          </div>
-        </form>
-      )}
-
       {/* Alert   Box */}
       { showAlert && (
         <section className="alert-container">
@@ -189,7 +149,7 @@ function TempleDetails() {
             </div>
         </section>
       )}
-
+       { donationFrom && <DonationForm currentUser={currentUser} templeDetails={templeDetails} onClose={() => setDonationFrom(false)} /> }
        { showBookingForm && <RoomBookingFrom currentUser={currentUser} templeDetails={templeDetails} onClose={() => setShowBookingForm(false)} /> }
        { showListofEvents && <ListofEvents templeDetails={templeDetails} onClose={() => setShowListofEvents(false)}  /> }
         <ToastContainer/>

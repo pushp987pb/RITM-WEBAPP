@@ -33,10 +33,11 @@ function EventUpdateForm(props){
                         }
                       }) 
                 }
-             setShowEventForm(false) }
+              }setShowEventForm(false)
         }
         catch(err){
             console.log("Error in saving event to DB",err.message)
+            setShowEventForm(false)
         }
     }
 

@@ -19,7 +19,7 @@
 .user-profile-img{
     position: absolute;
     left: 80%;
-    top: 30px;
+    top: 40px;
 }
 .user-profile-header h3{ 
     font-family: monospace;
@@ -27,7 +27,8 @@
     font-size: 28px;
  }
 .user-profile-img img{
-    width: 60%;
+    width: 70%;
+    height: 90%;
     border-radius: 20px;
 }
 
@@ -84,7 +85,17 @@
     cursor: pointer;
   }
 
-@media screen and (max-width: 600px) {
+  @media screen and (max-width: 860px) {
+    .user-profile-card{
+        font-size: 16px;
+        padding: 6px 16px;
+    }
+    .user-profile-section{
+        margin: 0px 40px 20px 40px;
+    }
+  }
+
+@media screen and (max-width: 660px) {
     .user-profile-section{
         margin: 0px 40px 20px 40px;
     }
@@ -97,6 +108,10 @@
         position: absolute;
         left: 70%;
         top: 20px;
+    }
+    .user-profile-img img{
+        width: 70%;
+        border-radius: 20px;
     }
     .user-profile-about-details{
         background-color: #f3f3f3;

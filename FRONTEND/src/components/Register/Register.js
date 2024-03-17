@@ -2,9 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
-import { hashSync } from 'bcryptjs';
-import { userLoginContext } from '../contexts/userLoginContext';
+import { useState, useContext, useEffect } from 'react';
 import { TempleContext } from '../contexts/TempleContext';
 import './Register.css'; // Import the CSS file
 
@@ -13,7 +11,7 @@ function Register() {
 
   let {isTemple} = useContext(TempleContext);
   
-  let { register, handleSubmit } = useForm();
+  let { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   let navigate = useNavigate(); // to navigate to login page
 
@@ -31,35 +29,55 @@ function Register() {
         navigate("/login");
       }
       else{
-        setError(res.data.payload)
-        console.log(res.data.payload)
+        setError(res.data.message)
       }
     } catch (err) {
       setError(err.message);
     }
   }
+   // reseting  form fields when isTemple changes
+   useEffect(() => {
+    reset();
+  }, [isTemple]);
 
   return (
     <section className='login-section'>
         <div className='wrapper'>
-          <div className="title">
+          <div className="registration-title">
             {isTemple ? 'Temple Registration' : 'User Registraton'}
           </div>
           {error.length !== 0 && <p className='fs-4 text-center text-danger'>{error}</p>}
+          {errors.templename && <p className='fs-4 text-center text-danger mb-0 mt-1'>{errors.templename.message}</p>}
+          {errors.username && <p className='fs-4 text-center text-danger mb-0'>{errors.username.message}</p>}
 
           <form onSubmit={handleSubmit(onRegisteration)} name='form1'>
             {
               isTemple ? (
             <div className="field">
-              <input {...register('templename')} type="text" required/>
+              <input {...register('templename', {
+                required: 'Temple name is required',
+                pattern: {
+                  value: /^[A-Za-z][A-Za-z0-9]{5,}$/,
+                  message: 'Use Minimum 6 alphabets & numbers only'
+                }
+              })} type="text"/>
               <label htmlFor="templename">Templename</label>
             </div>
             
           ) : (
             <div className="field">
-              <input {...register('username')} type="text" required/>
+              <input {...register('username', {
+                required: 'Username is required',
+                pattern: {
+                  value: /^[A-Za-z][A-Za-z0-9]{5,}$/,
+                  message: 'Use Minimum 6 alphabets & numbers only'
+                }
+              })} minLength={6} title='Minimum length must be six' type="text"/>
               <label htmlFor="username">Username </label>
             </div>
+          )}
+          {errors.username?.type === 'minLength' && (
+            <p>Username must be at least six characters long.</p>
           )}
           <div className="field">
             <input {...register('email')} type="email" required />

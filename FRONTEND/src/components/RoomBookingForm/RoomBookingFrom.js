@@ -28,25 +28,24 @@ function RoomBookingFrom(props){
             let response = await axios.post('http://localhost:7000/temple-api/save-rooms',updatedObj)
             if(response.status===201){
                 console.log(response.data.message)
-                toast(response.data.message)
-                 // Subtracting booked rooms from available rooms
+            // Subtracting booked rooms from available rooms
             let updatedAvailableRooms = {
                 single_seater: templeDetails.availableRooms.single_seater - roomObj.single_seater,
                 double_seater: templeDetails.availableRooms.double_seater - roomObj.double_seater,
                 triple_seater: templeDetails.availableRooms.triple_seater - roomObj.triple_seater
             }
-
             // Dispatch the updated available rooms to redux
             const updatedTempleObj = { templename:templeDetails.templename, availableRooms:updatedAvailableRooms }
             dispatch(updateTemple(updatedTempleObj)).then((updatedTemple)=>{
               if(updatedTemple){
                 console.log('Available Rooms updated successfully')
-                onClose();
               }
             })
-        }
+        } 
+        onClose();
         }catch(err){
-            console.log("Error in Booking Rooms",err.message)
+            console.log("Error in Booking Rooms",err.message);
+            onClose();
         }
     }
 
@@ -67,7 +66,7 @@ function RoomBookingFrom(props){
                 <input {...register("double_seater")} className="form-control" type="number" min='0' max={ double_seater} placeholder="No. of rooms" required />
                 <span>{double_seater}</span> 
                 </div>
-                    </div>
+            </div>
             <div className="form-group mb-3">
                 <label className="">Tripe Seater Rooms</label>
                 <div className="input-with-span">

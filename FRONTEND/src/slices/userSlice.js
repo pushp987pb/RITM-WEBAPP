@@ -8,7 +8,7 @@ export const userLoginPromiseStatus = createAsyncThunk(
       let res = await axios.post('http://localhost:7000/user-api/login', userCredObj)
       if (res.data.message === 'Login successful') {
         // saving to local storage
-        sessionStorage.setItem('token', res.data.token)
+        sessionStorage.setItem('jwtToken', res.data.token)
         return res.data.user; // return the user data
       } else {
         return thunkApi.rejectWithValue(res.data.message)
@@ -17,6 +17,22 @@ export const userLoginPromiseStatus = createAsyncThunk(
       return thunkApi.rejectWithValue({ message: err.message })
     }
   }
+);
+
+// relogin after page refresh.......  http://localhost:7000/user-api/get-user/karan
+export const userReloginPromise = createAsyncThunk( 'user-relogin',
+   async(username,thunkApi)=>{
+    try{
+        let res = await axios.get(`http://localhost:7000/user-api/get-user/${username}`)
+        if(res.data.message==='Relogin Successfull'){
+          return res.data.user;
+        }else {
+          return thunkApi.rejectWithValue(res.data.message)
+        }
+    }catch (err) {
+      return thunkApi.rejectWithValue({ message: err.message })
+    }
+   }
 );
 
 // updating current user 
@@ -42,7 +58,8 @@ export const userLoginSlice = createSlice({
   reducers: {
     setUserLogout:(state,action)=>{
       state.userLoginStatus=false;
-      state.currentUser={}
+      state.currentUser={};
+      state.errorMessage='';
     }
   },
   extraReducers : builder => builder
@@ -50,8 +67,6 @@ export const userLoginSlice = createSlice({
     state.isPending = true;
   })
   .addCase(userLoginPromiseStatus.fulfilled,(state,action)=>{
-    
-    console.log('action=',action)
     state.currentUser = action.payload;
     state.userLoginStatus = true;
     state.isPending = false
@@ -64,7 +79,11 @@ export const userLoginSlice = createSlice({
   .addCase(updateUser.fulfilled,(state,action)=>{
     state.currentUser = action.payload
   })
-
+  // extra reducer to relogin
+  .addCase(userReloginPromise.fulfilled,(state,action)=>{
+    state.currentUser = action.payload
+    state.userLoginStatus = true;
+  })
 });
 
 //export root reducer

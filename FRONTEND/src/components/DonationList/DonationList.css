@@ -23,6 +23,7 @@
     background: white;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    overflow-x: auto;
 }
 
 .close-button {
@@ -43,6 +44,7 @@
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
+    overflow: auto;
 }
 
 .table th, .table td {
@@ -67,3 +69,35 @@
     from {transform: scale(0)}
     to {transform: scale(1)}
   }
+
+  /* For tablets */
+@media (max-width: 768px) {
+  .DonationList {
+      /* Adjust styles as needed */
+      padding: 10px;
+      left: 40px;
+      right: 40px;
+  }
+
+  .table, .table th, .table td {
+      /* Adjust styles as needed */
+      font-size: 14px;
+      padding: 4px;
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+  .DonationList {
+      /* Adjust styles as needed */
+      padding: 5px;
+      left: 20px;
+      right: 20px;
+  }
+
+  .table, .table th, .table td {
+      /* Adjust styles as needed */
+      font-size: 12px;
+      padding: 2px;
+  }
+}

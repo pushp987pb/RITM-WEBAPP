@@ -10,7 +10,9 @@ const path = require('path');
 app.use(express.static(path.join( // here static is middleware and
     __dirname , '../FRONTEND/build'))) // join connect backend & frontend
 
+// importing cors to get request from different from servers
 app.use(cors({origin:'http://localhost:5000'}))
+
 //adding body parser middleware
 app.use(express.json())
 
@@ -30,6 +32,7 @@ app.use('',(req,res,next)=>{
 app.use((err,req,res,next)=>{
     res.send({message:"Error Occured",payload:err.message})
 })
+
 
 //assigning port number
 const PORT = process.env.PORT || 7000;

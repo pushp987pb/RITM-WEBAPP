@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import UserContextProvider from './components/contexts/UserContextProvider';
 import TempleContextProvider from './components/contexts/TempleContextProvider'; // Import the TempleContextProvider
 import { reduxStore } from "./Store";
 import { Provider } from "react-redux";
@@ -14,11 +13,9 @@ root.render(
   <React.StrictMode>
     {/* providing redux store to app */}
     <Provider store={reduxStore}>
-      <UserContextProvider>
         <TempleContextProvider>
           <App />
         </TempleContextProvider>
-      </UserContextProvider>
     </Provider>
   </React.StrictMode>
 );

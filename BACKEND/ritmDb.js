@@ -110,18 +110,3 @@ const RoomsBooking = mongoose.model('roombooking',roomsBookingSchema);
 //exporting User and Temple Models
 module.exports = { User, Temple, Events,RoomsBooking,Donation };
 
-
-// // schema for deatails of temple profile....
-// const roomData = new mongoose.Schema({
-//   single_seater : Number,
-//   double_seater : Number,
-//   triple_seater : Number,
-// })
-// const eventData = new mongoose.Schema({
-//   event_name : String,
-//   event_date : Date,
-//   event_duration : String
-// })
-// const donation = new mongoose.Schema({
-//   donation_received : Number
-// })

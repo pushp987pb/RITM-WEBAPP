@@ -6,7 +6,6 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 ::selection{
-  background: ;
   color: #fff;
 }
 .edit-profile-container{
@@ -58,12 +57,20 @@
   transition: all 0.3s ease;
   margin-bottom: 10px;
 }
-/* .edit-profile-wrapper form .field input:focus,
-form .field input:valid,textarea:focus{
-  border-color: #aaa;
-} */
+.field-gender{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.gender-options { 
+  height: 100%;
+  font-size: 17px;
+  padding: 0px 10px;
+  display: flex;
+  gap: 30px;
+}
 
-form .field .edit-btn{
+form .edit-field .edit-btn{
   padding: 10px;
   width: 40%;
   outline: none;
@@ -85,8 +92,24 @@ form .field .edit-btn:active{
   transform: scale(0.95);
 }
 
+.edit-field{
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 680px)  {
   .edit-profile-wrapper{
     width: 80%;
+  }
+  .edit-field{
+    flex-direction: column;
+    align-items: center;
+  }
+  form .edit-field .edit-btn{
+    width: 60%;
   }
 }

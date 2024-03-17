@@ -1,10 +1,20 @@
-const { User , Users_Data , Donation ,RoomsBooking } = require('../ritmDb')
+const { User  , Donation ,RoomsBooking } = require('../ritmDb')
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const getUsers = async (req,res)=>{
-    const user = await User.find();
-    res.send({message:"all temple-users data.......pb.",payload:user})
+const getUser = async (req,res)=>{
+  try{
+    let username = req.params.username;
+    let fromDb = await User.findOne({username:username})
+    if(fromDb!==null){
+      res.status(201).send({message:'Relogin Successfull',user:fromDb})
+    }else{
+      res.status(201).send({message:'Relogin Failed'})
+    }
+  }
+  catch(err){
+    res.status(500).send({message:"User not found",err})
+  }
 }
 
 // creating a new user
@@ -67,27 +77,6 @@ const updateUser = async (req,res)=>{
       }
 }
 
-const roomBooking_n_Donation = async (req, res) => {
-  try {
-    const dataObj = req.body;
-    let FromDb = await Users_Data.findOne({username:dataObj.username});
-    
-    if(FromDb !== null){ // if info of this user already existed
-      let updateObj = {};
-      for(let key in dataObj.rooms_n_donation){
-        updateObj[`rooms_n_donation.${key}`] = dataObj.rooms_n_donation[key];
-      }
-       await Users_Data.updateOne({username:dataObj.username}, {$set: updateObj});
-      res.send({message:"Data updated successfully"});
-    }else{
-      let result = await Users_Data.create(dataObj);
-      res.send({message:"Data added successfully"});
-    }
-  } catch (error) {
-    res.status(500).send({ message: 'Error in updating data', error: error.message });
-  }
-};
-
 // get user donation list 
 const getDonation = async (req, res) => {
   try {
@@ -124,4 +113,4 @@ const getRoomBooking = async (req,res) => {
 
 
 //exporting ....
-module.exports= {getUsers,createUser,userLogin,updateUser,roomBooking_n_Donation , getDonation ,getRoomBooking}
+module.exports= {getUser,createUser,userLogin,updateUser, getDonation ,getRoomBooking}

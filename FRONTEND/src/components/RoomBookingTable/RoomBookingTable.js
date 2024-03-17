@@ -35,7 +35,10 @@ function RoomBookingTable(props) {
                     {roomBookingArray.map((booking, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{isUser ? booking.temple.fullname : booking.user.fullname }</td>
+                            <td>{isUser ?
+                                (booking.temple.hasOwnProperty('fullname')? booking.temple.fullname : booking.temple.templename ):
+                                (booking.user.hasOwnProperty('fullname')? booking.user.fullname: booking.user.username)
+                            }</td>
                             <td>{booking.bookedRooms.single_seater}</td>
                             <td>{booking.bookedRooms.double_seater}</td>
                             <td>{booking.bookedRooms.triple_seater}</td>

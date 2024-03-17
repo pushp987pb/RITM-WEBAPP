@@ -24,22 +24,7 @@ Content-Type: application/json
 
 get http://localhost:7000/temple-api/get-temple-erd/jaimatadi@gmail.com
 
-###
-post http://localhost:7000/temple-api/temple-ERD
-Content-Type: application/json
 
-{
-    "temple_email": "jaimatadi@gmail.com",
-    "temple_ERD": 
-        {
-            "availableRooms": {
-                "single_seater":"11111",
-                "double_seater":"12",
-                "triple_seater":"15"
-            }
-        }
-    
-}
 ###
 put http://localhost:7000/temple-api/update-temple
 Content-Type: application/json
@@ -51,13 +36,13 @@ Content-Type: application/json
     "fullname":"naya naam"
 }
 ###
-get http://localhost:7000/temple-api/get-temple/65df8999402f42efda104f89
+get http://localhost:7000/temple-api/get-temple/
 
 ###
-get http://localhost:7000/temple-api/get-donation/Jai Mata Di Temple
+get http://localhost:7000/temple-api/get-temple/jaimatadi
 
 ###  getting user donation
-get http://localhost:7000/user-api/get-donation/karan
+get http://localhost:7000/user-api/get-user/karan
 ###
 get http://localhost:7000/user-api/get-room-booking/karan
 ###

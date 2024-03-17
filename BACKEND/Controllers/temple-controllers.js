@@ -8,6 +8,21 @@ const getTempleUsingID = async (req,res)=>{
   let templeFromDb = await Temple.findOne({_id:id})
   res.status(200).send({message:'Temple found',payload:templeFromDb})
 }
+// fetching temple by templename
+const getTemple = async (req,res)=>{
+  try{
+    let templename = req.params.templename;
+    let fromDb = await Temple.findOne({templename:templename})
+    if(fromDb!==null){
+      res.status(201).send({message:'Relogin Successfull',temple:fromDb})
+    }else{
+      res.status(201).send({message:'Relogin Failed'})
+    }
+  }
+  catch(err){
+    res.status(500).send({message:"Temple not found"})
+  }
+}
 
 
 // creating a new temple account
@@ -52,7 +67,7 @@ const templeLogin = async (req, res) => {
       return res.status(200).send({ message: "Invalid password" });
     }
     //Create jwt token and sign it
-    const signedToken = jwt.sign({ templename: templeFromDb.templename },process.env.SECRET_KEY,{ expiresIn: 600 }
+    const signedToken = jwt.sign({ templename: templeFromDb.templename },process.env.SECRET_KEY,{ expiresIn: "1d" }
     );
     res.status(200).send({ message: "Login successful", token: signedToken, temple: templeFromDb });
   }
@@ -79,7 +94,7 @@ const templeLogin = async (req, res) => {
 }
 
 // route to fetch data of all temples..
-const getTemples = async (req,res) =>{
+const viewTemples = async (req,res) =>{
   let fromDb = await Temple.find();
   res.status(200).send({message:'All temples Data',payload:fromDb})
 }
@@ -89,7 +104,7 @@ const makeDonation = async (req, res) => {
   try {
   let dataObj = req.body;
   // adding date 
-  dataObj.date = new Date().toLocaleDateString('en-GB');
+  dataObj.date = new Date().toISOString();
   dataObj.donation.amount = Number(dataObj.donation.amount);
   // saving to database
   await Donation.create(dataObj);
@@ -178,7 +193,7 @@ const getRoomBooking = async (req,res) => {
 }
 
 //exporting ....
-module.exports= {createTemple,templeLogin,
+module.exports= {createTemple,templeLogin, getTemple , 
                   makeDonation,updateTemple, getRoomBooking,
-                  getTemples,getTempleUsingID,getDonation , saveEvent , getEvents , saveRooms
+                  viewTemples,getTempleUsingID,getDonation , saveEvent , getEvents , saveRooms
               }

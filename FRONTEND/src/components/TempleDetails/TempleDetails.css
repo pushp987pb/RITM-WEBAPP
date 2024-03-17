@@ -81,20 +81,21 @@
 }
 
 .temple-details-card {
-  background-color: rgb(8, 122, 236);
+  background-color: dodgerblue;
   color: #fff;
   border-radius: 8px;
   padding: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4);
   margin-bottom: 20px;
 }
 
 .upcoming-events-card h3,
 .stay-facilities-card h3,
 .make-donations-card h3 {
-  font-size: 18px;
+  font-size: 24px;
   font-style: Garamond;
   margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .temple-details-card p{
@@ -110,7 +111,9 @@
   outline: none;
   border: 1px solid #fff;
 }
-
+/*three-cards-heading*/
+.three-cards-heading{
+}
 /* Room Booking From */
 
 #room-update-form{
@@ -200,15 +203,24 @@ form .field  span{
   border-radius: 5px;
 }
 
-
+@media screen and (max-width: 920px) {
+  .first-column{
+    width: 60%;
+   }
+   .second-column{
+    width: 30%;
+   }
+}
 
 @media screen and (max-width: 580px) {
  .temple-columns{
   display: flex;
   flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
 }
  .first-column,.second-column{
-  width: 100%;
+  width: 80%;
  }
 }
 
@@ -237,4 +249,8 @@ form .field  span{
     display: flex;
     justify-content: space-around;
     align-items: center;
+  }
+  .temple-info-row{
+    flex-direction: column;
+    text-align: left;
   }

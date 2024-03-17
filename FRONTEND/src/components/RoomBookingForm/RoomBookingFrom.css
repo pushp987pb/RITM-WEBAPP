@@ -9,7 +9,6 @@
   
   .input-with-span span {
     flex: 0 0 auto;
-    height: 38px; 
     font-size: 24px;
     border: 1px solid #aaa;
     margin-left: 10px;

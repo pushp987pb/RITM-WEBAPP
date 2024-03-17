@@ -13,44 +13,51 @@ import {useDispatch,useSelector} from 'react-redux';
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit , reset } = useForm();
   let dispatch = useDispatch();
 
-  const {errorMessage} = useSelector(state => state.userLogin)
+  const {errorMessage , userLoginStatus} = useSelector(state => state.userLogin)
+  const {templeLoginError,templeLoginStatus} = useSelector(state => state.templeLogin)
+  const {isTemple , setHideEditProfile} = useContext(TempleContext);
 
-  const {templeLoginStatus, templeLoginError} = useSelector(state => state.templeLogin)
-  const {isTemple} = useContext(TempleContext);
-
-    useEffect(() => {
-      if (templeLoginStatus === true) {
-        const targetPath = "/temple-profile";
-        navigate(targetPath);
+  useEffect(()=>{
+      if(templeLoginStatus===true){
+        navigate("/temple-profile");
       }
-    }, [templeLoginStatus, isTemple, navigate]);
+  },[templeLoginStatus]);
+
+  useEffect(()=>{
+      if(userLoginStatus===true){
+          // getting id from url
+          const searchParams = new URLSearchParams(location.search);
+          const id = searchParams.get('id');
+          // to go back to the TempleDetails component with the correct id
+          if (id !== null) {
+            navigate(`/temple-details/${id}`);
+            setHideEditProfile(true)
+          } else {
+            navigate("/user-profile");
+            setHideEditProfile(false)
+          }
+      }
+  },[userLoginStatus]);
+
 
     const handleUserLogin = (userCredObj) => {
-      dispatch(userLoginPromiseStatus(userCredObj)).then((action) => {
-          if (action.type === 'user-login/fulfilled') {
-            // getting id from url
-            const searchParams = new URLSearchParams(location.search);
-            const id = searchParams.get('id');
-            // Redirect back to the TempleDetails component with the correct id
-            if (id !== null) {
-              navigate(`/temple-details/${id}`);
-            } else {
-              navigate("/user-profile");
-            }
-          }
-        });
+      dispatch(userLoginPromiseStatus(userCredObj))
     }
 
     function onTempleLogin(templeCredObj){
-      dispatch(templeLoginPromiseStatus(templeCredObj))
+      dispatch(templeLoginPromiseStatus(templeCredObj));
     }
     
     function toRegister(){
       navigate("/register");
     }
+     // reseting  form fields when isTemple changes
+   useEffect(() => {
+    reset();
+  }, [isTemple,reset]);
 
   return (
    <section className='login-section'>
@@ -60,7 +67,7 @@ function Login() {
         </div>
         {errorMessage.length !== 0 && <p className='fs-4 text-center text-danger'>{errorMessage}</p>}
         {templeLoginError.length !== 0 && <p className='fs-4 text-center mt-1 mb-0 text-danger'>{templeLoginError}</p>}
-          <form onSubmit={handleSubmit(isTemple ? onTempleLogin : handleUserLogin)} name='form1'>
+          <form onSubmit={ handleSubmit(isTemple ? onTempleLogin : handleUserLogin)} name='form1'>
             {
               isTemple ? (
                 <div className="field">

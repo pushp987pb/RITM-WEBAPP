@@ -9,14 +9,11 @@ import EventUpdateForm from '../EventUpdateForm/EventUpdateForm';
 import RoomBookingTable from '../RoomBookingTable/RoomBookingTable';
 
 function TempleProfile() {
-  // states for donation table
-  let [totalDonation , setTotalDonation] = useState(0);
-  const [donationArr, setDonationArr] = useState([]);
   const [showDonationList, setShowDonationList] = useState(false);
   
   //state to render room booking array 
   const [showRoomBookingTable ,setShowRoomBookingTable ] = useState(false)
-  const {roomBookingArray} = useContext(TempleContext)
+  const {roomBookingArray,donationArr,totalDonation} = useContext(TempleContext)
 
   //fetching details from redux store
   const {currentTemple} = useSelector(state=>state.templeLogin)
@@ -25,17 +22,7 @@ function TempleProfile() {
   const [showEventForm, setShowEventForm] = useState(false);
 
   
-  // fetching dontion details
-  useEffect(() => {
-    const fetchDonation = async () => {
-      let response = await axios.get(`http://localhost:7000/temple-api/get-donation/${currentTemple.templename}`);
-        if(response.status === 201){
-          setTotalDonation(response.data.totalDonation);
-          setDonationArr(response.data.donationArr);
-        }
-    };
-    fetchDonation();
-  }, [totalDonation,donationArr]);
+
 
   
 
@@ -67,28 +54,20 @@ function TempleProfile() {
             <p>Double Seater Rooms: {currentTemple.hasOwnProperty('availableRooms') ? currentTemple.availableRooms.double_seater : "Not Specified"}</p>
             <p>Triple Seater Rooms: {currentTemple.hasOwnProperty('availableRooms') ? currentTemple.availableRooms.triple_seater : "Not Specified"}</p>
            
-          <button onClick={() => setShowRoomsForm(true)} className="update-rooms-button">
-            Update Rooms
-          </button>
-          { roomBookingArray.length!==0 &&
-            <button  onClick={() => setShowRoomBookingTable(true)} className="mx-1 update-rooms-button">
+            <button onClick={() => setShowRoomsForm(true)} className="update-rooms-button">
+              Update Rooms
+            </button>
+            <button  onClick={() => setShowRoomBookingTable(true)} className="m-1 update-rooms-button">
               Room Book List </button>
-            }
         </div> 
 
         <div className="temple-profile-card home-fund-card">
           <h3>DONATION </h3>
-          { totalDonation !==0 ? (
-              <>
                 <p className='fs-3'>Total Donations Received:<br/>  {totalDonation} Rs</p>
                 {/* Button to fetch donation table*/}
                   <button onClick={() => setShowDonationList(true)} className="update-rooms-button">
                     Donation List
                   </button>
-              </>
-               ) : (
-                <p className='fs-3'>Total Donations Received:<br/>  0 Rs</p>
-              )}
         </div>
       </div>
 

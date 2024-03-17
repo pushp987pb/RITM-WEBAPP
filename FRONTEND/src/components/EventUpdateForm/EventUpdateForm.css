@@ -27,3 +27,9 @@
     color: #696c6f;
 }
 
+@media screen and (max-width: 580px) {
+    .event-update-form {
+        width: 80%;
+        margin: 30px;
+    }
+}
