@@ -4,8 +4,6 @@ import './RoomBookingFrom.css';
 import { useDispatch } from "react-redux";
 import {updateTemple} from '../../slices/templeSlice'
 import {useForm} from 'react-hook-form';
-import {ToastContainer , toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function RoomBookingFrom(props){
     
@@ -88,7 +86,6 @@ function RoomBookingFrom(props){
                 <button onClick={onClose}>Cancel</button>
             </div>
     </form>
-    <ToastContainer/>
     </div>
     )
 }

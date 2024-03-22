@@ -38,8 +38,15 @@ export const userReloginPromise = createAsyncThunk( 'user-relogin',
 // updating current user 
 export const updateUser = createAsyncThunk(
   'update-user', async (updatedObj,thunkApi) =>{
+    // fetching  the token from session storage
+  const token = sessionStorage.getItem('jwtToken');
+  // creating  the headers object
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  };
     try{
-        let res = await axios.put(`http://localhost:7000/user-api/update-user`,updatedObj);
+        let res = await axios.put(`http://localhost:7000/user-api/update-user`,updatedObj, { headers });
         if(res.status===200){
             return res.data.payload
         }

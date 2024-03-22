@@ -16,7 +16,6 @@ function DonationList(props) {
     return (
      <section className='modal-dontion'>
         <div className="DonationList animate-donation-table ">
-            <div style={{overflowY :"scroll"}}>
             <h2 className='text-center'>{isUser ? 'Your Donation Details' : 'Received Donation Details'}</h2>
             <table className="table table-striped text-center">
                 <thead>
@@ -46,7 +45,6 @@ function DonationList(props) {
             <h3 className='text-center'> {isUser ? 'Total Donated Amound':'Total Donation Received'}: {totalDonation}</h3>
             <button className="close-button" onClick={onClose}>Close</button>
             </div>
-        </div>
      </section>
     );
 }

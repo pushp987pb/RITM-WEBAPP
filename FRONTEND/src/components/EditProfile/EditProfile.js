@@ -100,7 +100,7 @@ function EditProfile(){
                   <label htmlFor="district">District</label>
                   <input {...register("district")} type="text"  required/>
                 </div>
-                  <div className="field">
+                  <div className="edit-field">
                     <button  type="submit" className="edit-btn save">Save</button>
                     <button onClick={openProfile} type="button" className="edit-btn cancel">Cancel</button>
                   </div> 

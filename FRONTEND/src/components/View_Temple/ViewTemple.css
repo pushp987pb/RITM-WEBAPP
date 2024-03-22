@@ -23,6 +23,7 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     gap: 20px;
     padding: 20px;
   }
@@ -81,6 +82,8 @@
   @media screen and (max-width: 480px) {
     .temple-container {
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       width: 100%;
     }
     .temple-card {

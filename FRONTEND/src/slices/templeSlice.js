@@ -39,7 +39,7 @@ export const templeReloginPromise = createAsyncThunk( 'temple-relogin',
 // updating current temple 
 export const updateTemple = createAsyncThunk(
   'update-temple', async (updatedObj,thunkApi) =>{
-     // fetching  the token from session storage
+  // fetching  the token from session storage
   const token = sessionStorage.getItem('jwtToken');
   // creating  the headers object
   const headers = {

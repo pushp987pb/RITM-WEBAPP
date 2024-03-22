@@ -1,6 +1,9 @@
 const express = require('express')
 const userApp = express.Router();
 
+// importing middleware
+const verifyToken = require('../Middlewares/verifyToken.js')
+
 // get express-async-handler to handle async errors
 const expressAsyncHandler = require('express-async-handler');
 
@@ -18,7 +21,7 @@ userApp.post('/create-user',expressAsyncHandler(createUser))
 userApp.post('/login',expressAsyncHandler(userLogin))
 
 // update user
-userApp.put('/update-user',expressAsyncHandler(updateUser))
+userApp.put('/update-user',verifyToken,expressAsyncHandler(updateUser))
 
 // getting donation details 
 userApp.get('/get-donation/:username',expressAsyncHandler(getDonation))

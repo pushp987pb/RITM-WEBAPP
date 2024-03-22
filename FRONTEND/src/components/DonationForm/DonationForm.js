@@ -1,8 +1,6 @@
 import axios from "axios";
 import React from "react";
 import {useForm} from 'react-hook-form';
-import {ToastContainer , toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function DonationForm(props){
     
@@ -17,7 +15,7 @@ function DonationForm(props){
         };
           let response = await axios.post('http://localhost:7000/temple-api/make-donation',updatedObj)
           if(response.status===201){
-            toast("Donation Succesfull")
+            console.log("Donation Succesfull")
           }else{
             console.log(response.data.payload)
           }
@@ -46,8 +44,15 @@ function DonationForm(props){
               <button className="form-buttons-btn"  type="button" onClick={onClose}>Cancel</button>
             </div>
         </form>
-      <ToastContainer/>
     </div>
     )
 }
 export default DonationForm
+
+
+
+
+// import {ToastContainer , toast} from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// <ToastContainer/>

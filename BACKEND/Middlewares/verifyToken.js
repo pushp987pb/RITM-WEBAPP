@@ -7,8 +7,7 @@ function verifyToken(req,res,next){
 
         //get token
         if(bearerToken){
-        const token=bearerToken.split(' ')[1]
-        
+        const token=bearerToken.split(' ')[1];
         //verify the token
         let decodedToken=jwt.verify(token,'abcdefgh')
         next()

@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
 import './TempleProfile.css';
 import { TempleContext } from '../contexts/TempleContext';
 import { useSelector } from 'react-redux';
@@ -21,10 +20,6 @@ function TempleProfile() {
   const [showRoomsForm, setShowRoomsForm] = useState(false);
   const [showEventForm, setShowEventForm] = useState(false);
 
-  
-
-
-  
 
   return (
     <section className="temple-profile-section">
@@ -43,7 +38,7 @@ function TempleProfile() {
            <p className='event-date'>Event Date: { currentTemple.hasOwnProperty('upcomingEvent') ? currentTemple.upcomingEvent.event_date : 'Not Specified' } </p>
            <p className='event-duration'>Event Duration: { currentTemple.hasOwnProperty('upcomingEvent') ? currentTemple.upcomingEvent.event_duration : 'Not Specified' } </p>
           <button onClick={() => setShowEventForm(true)} className="update-rooms-button">
-            Update Event
+            Add Events
           </button>
         </div> 
 

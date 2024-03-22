@@ -8,7 +8,9 @@ require('dotenv').config();
 // connecting to react app
 const path = require('path');
 app.use(express.static(path.join( // here static is middleware and
-    __dirname , '../FRONTEND/build'))) // join connect backend & frontend
+    __dirname , '../FRONTEND/build'))// join connect backend & frontend
+) 
+
 
 // importing cors to get request from different from servers
 app.use(cors({origin:'http://localhost:5000'}))
@@ -24,9 +26,10 @@ const templeApp = require('./APIs/temple-api');
 app.use('/user-api',userApp);
 app.use('/temple-api',templeApp);
 
-app.use('',(req,res,next)=>{
+app.use('*',(req,res,next)=>{
     res.sendFile((path.join(__dirname , '../FRONTEND/build/index.html')))
 })
+
 
 // adding error handlers to deal with synchronous errors
 app.use((err,req,res,next)=>{
@@ -37,3 +40,6 @@ app.use((err,req,res,next)=>{
 //assigning port number
 const PORT = process.env.PORT || 7000;
 app.listen(PORT , ()=>{console.log(`RITM SERVER listening at port ${PORT}`)})
+
+
+

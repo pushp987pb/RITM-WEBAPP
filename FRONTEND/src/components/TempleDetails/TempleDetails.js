@@ -79,6 +79,8 @@ function TempleDetails() {
           <div className="first-column">
              <div className="temple-info-row">
                 <p className="temple-detail">Email: {templeDetails.email ? templeDetails.email : "Not Provided"}</p>
+                <p className="temple-detail">Mobile: {templeDetails.mobileNumber ? templeDetails.mobileNumber : "Not Provided"}</p>
+                <p className="temple-detail">Diety: {templeDetails.diety ? templeDetails.diety : "Not Provided"}</p>
                 <p className="temple-detail">State: {templeDetails.state  ? templeDetails.state : "Not Provided"}</p>
                 <p className="temple-detail">District: {templeDetails.district  ? templeDetails.district : "Not Provided"}</p>
               </div>
@@ -143,7 +145,7 @@ function TempleDetails() {
           <div className="alert-box">
               <p>You need to login for Booking Rooms/Donation</p>
               <div className="alert-buttons-container">
-                <button onClick={sendToLogin} className="btn btn-primary"> Login</button>
+                <button onClick={sendToLogin} className="btn btn-primary mb-1"> Login</button>
                 <button onClick={() => setShowAlert(false)} className="btn btn-danger">Cancel</button>
              </div>
             </div>

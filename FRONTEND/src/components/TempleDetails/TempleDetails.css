@@ -57,7 +57,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  text-align: left;
 }
 
 .temple-detail {
@@ -239,11 +239,12 @@ form .field  span{
   left: 50%;
   transform: translate(-50%, -50%);
   background-color:#f2f2f2;
-  padding: 30px;
+  padding: 15px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   z-index: 1001;
-  border: 1px solid #aaa
+  border: 1px solid #aaa;
+  text-align: center;
   }
   .alert-buttons-container{
     display: flex;
@@ -253,4 +254,15 @@ form .field  span{
   .temple-info-row{
     flex-direction: column;
     text-align: left;
+  }
+
+  @media screen and (max-width: 420px) {
+    .alert-buttons-container{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .alert-box {
+      width: 80%;
+    }
   }

@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TempleContextProvider from './components/contexts/TempleContextProvider'; // Import the TempleContextProvider
+import TempleContextProvider from './components/contexts/TempleContextProvider'; // importing the TempleContextProvider
 import { reduxStore } from "./Store";
 import { Provider } from "react-redux";
 
