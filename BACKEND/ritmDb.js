@@ -1,13 +1,25 @@
 const mongoose = require('mongoose');
 const bcryptjs = require("bcryptjs");
 
-require('dotenv').config()
-const DB_URL = process.env.LOCAL_DB_URL;
+require('dotenv').config();
 
-//connecting to DB
-mongoose.connect(DB_URL)
-.then(()=>console.log("DB connection successful....."))
-.catch(err=>console.log("Error in DB connection",err))
+const DB_URL = process.env.MONGODB_ATLAS_URL;
+
+// Connect to MongoDB Atlas
+mongoose.connect(DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  // Additional options can be added here if needed
+})
+.then(() => console.log("DB connection successful....."))
+.catch(err => console.log("Error in DB connection", err));
+
+// const DB_URL = process.env.LOCAL_DB_URL;
+//connection to local MONGO_DB 
+// //connecting to DB
+// mongoose.connect(DB_URL)
+// .then(()=>console.log("DB connection successful....."))
+// .catch(err=>console.log("Error in DB connection",err))
 
 // Function to create a user and temple schema and model
 function createModel(name, uniqueField, uniqueFieldMessage) {
